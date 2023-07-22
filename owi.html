@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Owais Top Fragger</title>
+        <link rel="stylesheet" href="owi.css">
+    </head>
+    <body>
+        <div class="blur-container">
+            <button id="play-button" class="play-button">Ao Chodain</button>
+        </div>
+        <div class="head-div">
+            <h1>Welcome to Owais Kotha</h1>
+        </div>
+        <div class="but-div">
+            <button class = "attack">Attack</button>
+        </div>
+        <p class="bouncing-paragraph">mere pe mouse lao babu main nache gi 🍑</p>
+        <div class="centered-image">
+            <img src="owipic.jpg" alt="Spinning Image">
+        </div>
+        <div class="attack-image">
+            <img src="dp.jpg" alt="Attack Image">
+        </div>
+        <audio id="background-music" loop>
+            <source src="mahesh.mp3" type="audio/mpeg">
+            <source src="mahesh.ogg" type="audio/ogg">
+            <source src="mahesh.wav" type="audio/wav">
+        </audio>
+        <div class="loading-spinner"></div>
+
+        <script>
+            const attackButton = document.querySelector('.attack');
+            const attackImage = document.querySelector('.attack-image');
+            const spinningImage = document.querySelector('.centered-image img');
+        
+            let attackImageVisible = false; 
+        
+            attackButton.addEventListener('click', () => {
+                if (!attackImageVisible) {
+                    attackImage.style.display = 'block';
+        
+                    
+                    const animation = attackImage.animate(
+                        [
+                            { left: `-${attackImage.offsetWidth}px` },
+                            { left: `${spinningImage.offsetLeft - attackImage.offsetWidth}px` }
+                        ],
+                        {
+                            duration: 1000, // Adjust the duration as needed
+                            easing: 'linear',
+                            fill: 'forwards'
+                        }
+                    );
+        
+                    // After the attack animation finishes, reset the attack image position and hide it
+                    animation.onfinish = () => {
+                        attackImageVisible = false;
+                        attackImage.style.left = `-${attackImage.offsetWidth}px`;
+                        attackImage.style.display = 'none';
+                    };
+        
+                    attackImageVisible = true;
+                }
+            });
+        </script>
+        <script>
+            const playButton = document.getElementById('play-button');
+            const blurContainer = document.querySelector('.blur-container');
+            const loadingSpinner = document.querySelector('.loading-spinner');
+            const backgroundMusic = document.getElementById('background-music');
+        
+            playButton.addEventListener('click', () => {
+                // Show loading spinner while music is loading (optional but smooth transition)
+                loadingSpinner.style.display = 'block';
+        
+                // Play the background music when the play button is clicked
+                backgroundMusic.play().then(() => {
+                    // Hide the blur container and spinner after music starts
+                    blurContainer.classList.remove('active');
+                    loadingSpinner.style.display = 'none';
+                });
+            });
+        
+            // Show the blur container when the page loads initially
+            window.addEventListener('DOMContentLoaded', () => {
+                blurContainer.classList.add('active');
+            });
+        </script>
+    </body>
+</html>
